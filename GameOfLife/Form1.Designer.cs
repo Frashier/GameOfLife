@@ -31,10 +31,7 @@ namespace GameOfLife
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.GridCheckbox = new System.Windows.Forms.CheckBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.RunCheckbox = new System.Windows.Forms.CheckBox();
             this.SizeNud = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
@@ -42,24 +39,24 @@ namespace GameOfLife
             this.DelayNud = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.DensityNud = new System.Windows.Forms.NumericUpDown();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.label4 = new System.Windows.Forms.Label();
+            this.ResetButton = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.ThreadsNud = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.SizeNud)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DelayNud)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DensityNud)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ThreadsNud)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(12, 47);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(775, 391);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
             // 
             // GridCheckbox
             // 
             this.GridCheckbox.AutoSize = true;
-            this.GridCheckbox.Location = new System.Drawing.Point(13, 13);
+            this.GridCheckbox.Location = new System.Drawing.Point(9, 111);
             this.GridCheckbox.Name = "GridCheckbox";
             this.GridCheckbox.Size = new System.Drawing.Size(48, 19);
             this.GridCheckbox.TabIndex = 1;
@@ -69,7 +66,7 @@ namespace GameOfLife
             // RunCheckbox
             // 
             this.RunCheckbox.AutoSize = true;
-            this.RunCheckbox.Location = new System.Drawing.Point(68, 12);
+            this.RunCheckbox.Location = new System.Drawing.Point(6, 13);
             this.RunCheckbox.Name = "RunCheckbox";
             this.RunCheckbox.Size = new System.Drawing.Size(47, 19);
             this.RunCheckbox.TabIndex = 2;
@@ -79,7 +76,7 @@ namespace GameOfLife
             // 
             // SizeNud
             // 
-            this.SizeNud.Location = new System.Drawing.Point(220, 11);
+            this.SizeNud.Location = new System.Drawing.Point(104, 33);
             this.SizeNud.Name = "SizeNud";
             this.SizeNud.Size = new System.Drawing.Size(48, 23);
             this.SizeNud.TabIndex = 3;
@@ -88,11 +85,12 @@ namespace GameOfLife
             0,
             0,
             0});
+            this.SizeNud.ValueChanged += new System.EventHandler(this.SizeNud_ValueChanged_1);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(122, 13);
+            this.label1.Location = new System.Drawing.Point(6, 35);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(92, 15);
             this.label1.TabIndex = 4;
@@ -101,7 +99,7 @@ namespace GameOfLife
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(274, 14);
+            this.label2.Location = new System.Drawing.Point(9, 64);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(69, 15);
             this.label2.TabIndex = 6;
@@ -109,12 +107,17 @@ namespace GameOfLife
             // 
             // DelayNud
             // 
-            this.DelayNud.Location = new System.Drawing.Point(349, 12);
+            this.DelayNud.Location = new System.Drawing.Point(84, 62);
+            this.DelayNud.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
             this.DelayNud.Name = "DelayNud";
             this.DelayNud.Size = new System.Drawing.Size(48, 23);
             this.DelayNud.TabIndex = 5;
             this.DelayNud.Value = new decimal(new int[] {
-            10,
+            100,
             0,
             0,
             0});
@@ -123,7 +126,7 @@ namespace GameOfLife
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(403, 14);
+            this.label3.Location = new System.Drawing.Point(9, 93);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(70, 15);
             this.label3.TabIndex = 8;
@@ -131,7 +134,7 @@ namespace GameOfLife
             // 
             // DensityNud
             // 
-            this.DensityNud.Location = new System.Drawing.Point(478, 12);
+            this.DensityNud.Location = new System.Drawing.Point(84, 91);
             this.DensityNud.Name = "DensityNud";
             this.DensityNud.Size = new System.Drawing.Size(48, 23);
             this.DensityNud.TabIndex = 7;
@@ -142,35 +145,106 @@ namespace GameOfLife
             0});
             this.DensityNud.ValueChanged += new System.EventHandler(this.DensityNud_ValueChanged);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(533, 15);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(0, 15);
+            this.label4.TabIndex = 9;
+            // 
+            // ResetButton
+            // 
+            this.ResetButton.Location = new System.Drawing.Point(9, 136);
+            this.ResetButton.Name = "ResetButton";
+            this.ResetButton.Size = new System.Drawing.Size(75, 23);
+            this.ResetButton.TabIndex = 10;
+            this.ResetButton.Text = "Reset";
+            this.ResetButton.UseVisualStyleBackColor = true;
+            this.ResetButton.Click += new System.EventHandler(this.ResetButton_Click_1);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.ThreadsNud);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.RunCheckbox);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.ResetButton);
+            this.groupBox2.Controls.Add(this.SizeNud);
+            this.groupBox2.Controls.Add(this.DelayNud);
+            this.groupBox2.Controls.Add(this.GridCheckbox);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.DensityNud);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.groupBox2.Location = new System.Drawing.Point(0, 0);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(319, 607);
+            this.groupBox2.TabIndex = 12;
+            this.groupBox2.TabStop = false;
+            // 
+            // ThreadsNud
+            // 
+            this.ThreadsNud.Location = new System.Drawing.Point(63, 185);
+            this.ThreadsNud.Maximum = 1;
+            this.ThreadsNud.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.ThreadsNud.Name = "ThreadsNud";
+            this.ThreadsNud.Size = new System.Drawing.Size(35, 23);
+            this.ThreadsNud.TabIndex = 12;
+            this.ThreadsNud.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.ThreadsNud.ValueChanged += new System.EventHandler(this.ThreadsNud_ValueChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 185);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(51, 15);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Threads:";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Location = new System.Drawing.Point(319, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(644, 607);
+            this.pictureBox1.TabIndex = 13;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.SizeChanged += new System.EventHandler(this.pictureBox1_SizeChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.DensityNud);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.DelayNud);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.SizeNud);
-            this.Controls.Add(this.RunCheckbox);
-            this.Controls.Add(this.GridCheckbox);
+            this.ClientSize = new System.Drawing.Size(963, 607);
             this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.label4);
             this.Name = "Form1";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SizeNud)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DelayNud)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DensityNud)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ThreadsNud)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.CheckBox GridCheckbox;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.CheckBox RunCheckbox;
         private System.Windows.Forms.NumericUpDown SizeNud;
         private System.Windows.Forms.Label label1;
@@ -178,6 +252,12 @@ namespace GameOfLife
         private System.Windows.Forms.NumericUpDown DelayNud;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown DensityNud;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button ResetButton;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown ThreadsNud;
     }
 }
 

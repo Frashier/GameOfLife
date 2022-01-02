@@ -1,25 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GameOfLife
 {
     public partial class Form1 : Form
     {
+        Timer Timer;
+
         public Form1()
         {
             InitializeComponent();
+            ThreadsNud.Maximum = Environment.ProcessorCount - 1 == 0 ? 1 : Environment.ProcessorCount - 1;
+
+            Timer = new Timer
+            {
+                Interval = 100,
+                Enabled = false
+            };
+            Timer.Tick += new EventHandler(timer_Tick);
+
             Reset();
         }
 
         // GUI actions that require a board reset
-        private void ResetButton_Click(object sender, EventArgs e) { Reset(); }
+        private void ResetButton_Click_1(object sender, EventArgs e) { Reset(); }
         private void pictureBox1_SizeChanged(object sender, EventArgs e) { Reset(); }
         private void SizeNud_ValueChanged(object sender, EventArgs e) { Reset(); }
         private void DensityNud_ValueChanged(object sender, EventArgs e) { Reset(); }
@@ -34,6 +39,8 @@ namespace GameOfLife
         /// </summary>
         private void Render()
         {
+            System.Console.WriteLine("Tick");
+
             using (var bmp = new Bitmap(Board.Width, Board.Height))
             using (var gfx = Graphics.FromImage(bmp))
             using (var cellBrush = new SolidBrush(Color.LightGreen))
@@ -71,16 +78,24 @@ namespace GameOfLife
                 width: pictureBox1.Width,
                 height: pictureBox1.Height,
                 cellSize: (int)SizeNud.Value,
-                liveDensity: (double)DensityNud.Value / 100);
+                liveDensity: (double)DensityNud.Value / 100,
+                numberOfThreads: (int) ThreadsNud.Value
+            );
             Render();
         }
 
-        private void RunCheckbox_CheckedChanged(object sender, EventArgs e) { timer1.Enabled = RunCheckbox.Checked; }
-        private void DelayNud_ValueChanged(object sender, EventArgs e) { timer1.Interval = (int)DelayNud.Value; }
-        private void timer1_Tick(object sender, EventArgs e)
+        private void RunCheckbox_CheckedChanged(object sender, EventArgs e) { Timer.Enabled = RunCheckbox.Checked; }
+        private void DelayNud_ValueChanged(object sender, EventArgs e) { Timer.Interval = (int)DelayNud.Value; }
+        private void SizeNud_ValueChanged_1(object sender, EventArgs e) { Reset();  }
+        private void timer_Tick(object sender, EventArgs e)
         {
             Board.Advance();
             Render();
+        }
+
+        private void ThreadsNud_ValueChanged(object sender, EventArgs e)
+        {
+            Reset();
         }
     }
 }

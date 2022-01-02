@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace GameOfLife
 {
@@ -14,12 +11,14 @@ namespace GameOfLife
         public int Columns {get {return Cells.GetLength(0); }}
         public int Rows {get {return Cells.GetLength(1); }}
         public int Width {get {return Columns * CellSize; }}
-        public int Height {get {return Rows * CellSize; }}
+        public int Height { get { return Rows * CellSize; } }
 
-        public Board(int width, int height, int cellSize, double liveDensity = .1)
+        public int NumberOfThreads;
+
+        public Board(int width, int height, int cellSize, double liveDensity = .1, int numberOfThreads = 1)
         {
             CellSize = cellSize;
-
+            NumberOfThreads = numberOfThreads;
             Cells = new Cell[width / cellSize, height / cellSize];
             for (int x = 0; x < Columns; x++)
             {
@@ -51,11 +50,27 @@ namespace GameOfLife
         /// </summary>
         public void Advance()
         {
+            // Each thread works on their own rows
+            Thread[] Threads = new Thread[NumberOfThreads];
+            for (int i = 0; i < NumberOfThreads; i++)
+            {
+                DeterminingThread temp = new DeterminingThread(NumberOfThreads, Cells);
+                Threads[i] = new Thread(new ThreadStart(temp.DetermineNextState));
+                Threads[i].Start();
+            }
+
+            foreach (var thread in Threads)
+            {
+                thread.Join();
+            }
+
+            /*
             foreach (var cell in Cells)
             {
                 cell.DetermineNextState();
 
             }
+            */
             foreach (var cell in Cells)
             {
                 cell.Advance();
