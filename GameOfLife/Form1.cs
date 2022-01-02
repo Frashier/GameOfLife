@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace GameOfLife
 {
     public partial class Form1 : Form
     {
-        Timer Timer;
+        System.Windows.Forms.Timer Timer;
+        long[] RenderTimes;
+        int RenderTimesIndex;
 
         public Form1()
         {
             InitializeComponent();
+
+            // Change threads numberic up and down maximum depending on system/s processor count
             ThreadsNud.Maximum = Environment.ProcessorCount - 1 == 0 ? 1 : Environment.ProcessorCount - 1;
 
-            Timer = new Timer
+            Timer = new System.Windows.Forms.Timer
             {
                 Interval = 100,
                 Enabled = false
@@ -39,7 +44,8 @@ namespace GameOfLife
         /// </summary>
         private void Render()
         {
-            System.Console.WriteLine("Tick");
+            // Start measuring time
+            var watch = System.Diagnostics.Stopwatch.StartNew();
 
             using (var bmp = new Bitmap(Board.Width, Board.Height))
             using (var gfx = Graphics.FromImage(bmp))
@@ -50,7 +56,7 @@ namespace GameOfLife
                 var cellSize = (GridCheckbox.Checked && Board.CellSize > 1) ?
                                 new Size(Board.CellSize - 1, Board.CellSize - 1) :
                                 new Size(Board.CellSize, Board.CellSize);
-
+                
                 for (int col = 0; col < Board.Columns; col++)
                 {
                     for (int row = 0; row < Board.Rows; row++)
@@ -64,9 +70,20 @@ namespace GameOfLife
                         }
                     }
                 }
-
+                
                 pictureBox1.Image = (Bitmap)bmp.Clone();
             }
+
+            // Calculate average render time
+            long elapsedMs = watch.ElapsedMilliseconds;
+            RenderTimesIndex = RenderTimesIndex == 9 ? 0 : RenderTimesIndex++;
+            RenderTimes[RenderTimesIndex] = elapsedMs;
+            long sum = 0;
+            for (int i = 0; i < 10; i++)
+            {
+                sum += RenderTimes[RenderTimesIndex];
+            }
+            RenderTimeLabel.Text = ((double) sum / 10).ToString();
         }
 
         /// <summary>
@@ -74,6 +91,11 @@ namespace GameOfLife
         /// </summary>
         private void Reset()
         {
+            // Reset render times
+            RenderTimeLabel.Text = "0";
+            RenderTimes = new long[10];
+            RenderTimesIndex = 0;
+
             Board = new Board(
                 width: pictureBox1.Width,
                 height: pictureBox1.Height,
@@ -81,6 +103,9 @@ namespace GameOfLife
                 liveDensity: (double)DensityNud.Value / 100,
                 numberOfThreads: (int) ThreadsNud.Value
             );
+
+            DeterminingThread.Cells = Board.Cells;
+            DeterminingThread.NumberOfThreads = (int)ThreadsNud.Value;
             Render();
         }
 

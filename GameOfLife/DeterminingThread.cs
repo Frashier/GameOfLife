@@ -9,21 +9,32 @@ namespace GameOfLife
     class DeterminingThread
     {
         private int ThreadNumber;
-        private readonly Cell[,] Cells;
+        static public Cell[,] Cells;
+        static public int NumberOfThreads;
 
-        public DeterminingThread(int threadNumber, Cell[,] cells)
+        public DeterminingThread(int threadNumber)
         {
             ThreadNumber = threadNumber;
-            Cells = cells;
         }
 
         public void DetermineNextState()
         {
-            for (int row = ThreadNumber; row < Cells.GetLength(0); row += ThreadNumber)
+            for (int row = ThreadNumber; row < Cells.GetLength(0); row += NumberOfThreads)
             {
                 for (int column = 0; column < Cells.GetLength(1); column++)
                 {
                     Cells[row, column].DetermineNextState();
+                }
+            }
+        }
+
+        public void Advance()
+        {
+            for (int row = ThreadNumber; row < Cells.GetLength(0); row += NumberOfThreads)
+            {
+                for (int column = 0; column < Cells.GetLength(1); column++)
+                {
+                    Cells[row, column].Advance();
                 }
             }
         }

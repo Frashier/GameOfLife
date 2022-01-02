@@ -42,6 +42,9 @@ namespace GameOfLife
             this.label4 = new System.Windows.Forms.Label();
             this.ResetButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.RenderTimeLabel = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.ThreadsNud = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -165,6 +168,9 @@ namespace GameOfLife
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.RenderTimeLabel);
+            this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.ThreadsNud);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.RunCheckbox);
@@ -183,10 +189,44 @@ namespace GameOfLife
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
             // 
+            // label8
+            // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(152, 586);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(23, 15);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "ms";
+            // 
+            // RenderTimeLabel
+            // 
+            this.RenderTimeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.RenderTimeLabel.AutoSize = true;
+            this.RenderTimeLabel.Location = new System.Drawing.Point(132, 586);
+            this.RenderTimeLabel.Name = "RenderTimeLabel";
+            this.RenderTimeLabel.Size = new System.Drawing.Size(13, 15);
+            this.RenderTimeLabel.TabIndex = 14;
+            this.RenderTimeLabel.Text = "0";
+            // 
+            // label6
+            // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 586);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(120, 15);
+            this.label6.TabIndex = 13;
+            this.label6.Text = "Average render time: ";
+            // 
             // ThreadsNud
             // 
             this.ThreadsNud.Location = new System.Drawing.Point(63, 185);
-            this.ThreadsNud.Maximum = 1;
+            this.ThreadsNud.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.ThreadsNud.Minimum = new decimal(new int[] {
             1,
             0,
@@ -258,6 +298,9 @@ namespace GameOfLife
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.NumericUpDown ThreadsNud;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label RenderTimeLabel;
+        private System.Windows.Forms.Label label6;
     }
 }
 

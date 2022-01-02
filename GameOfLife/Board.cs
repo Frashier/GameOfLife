@@ -50,12 +50,26 @@ namespace GameOfLife
         /// </summary>
         public void Advance()
         {
+            // DeterminingThread.Cells = Cells;
             // Each thread works on their own rows
             Thread[] Threads = new Thread[NumberOfThreads];
             for (int i = 0; i < NumberOfThreads; i++)
             {
-                DeterminingThread temp = new DeterminingThread(NumberOfThreads, Cells);
+                DeterminingThread temp = new DeterminingThread(i);
                 Threads[i] = new Thread(new ThreadStart(temp.DetermineNextState));
+                Threads[i].Start();
+            }
+
+            foreach (var thread in Threads)
+            {
+                thread.Join();
+            }
+
+            Threads = new Thread[NumberOfThreads];
+            for (int i = 0; i < NumberOfThreads; i++)
+            {
+                DeterminingThread temp = new DeterminingThread(i);
+                Threads[i] = new Thread(new ThreadStart(temp.Advance));
                 Threads[i].Start();
             }
 
@@ -71,10 +85,11 @@ namespace GameOfLife
 
             }
             */
+            /*
             foreach (var cell in Cells)
             {
                 cell.Advance();
-            }
+            }*/
         }
 
         /// <summary>
