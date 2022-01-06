@@ -42,17 +42,15 @@ namespace GameOfLife
             this.label4 = new System.Windows.Forms.Label();
             this.ResetButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.ParalellismCheckBox = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
             this.RenderTimeLabel = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.ThreadsNud = new System.Windows.Forms.NumericUpDown();
-            this.label5 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.SizeNud)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DelayNud)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DensityNud)).BeginInit();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ThreadsNud)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -168,11 +166,10 @@ namespace GameOfLife
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.ParalellismCheckBox);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.RenderTimeLabel);
             this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.ThreadsNud);
-            this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.RunCheckbox);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.ResetButton);
@@ -188,6 +185,16 @@ namespace GameOfLife
             this.groupBox2.Size = new System.Drawing.Size(319, 607);
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
+            // 
+            // ParalellismCheckBox
+            // 
+            this.ParalellismCheckBox.AutoSize = true;
+            this.ParalellismCheckBox.Location = new System.Drawing.Point(7, 166);
+            this.ParalellismCheckBox.Name = "ParalellismCheckBox";
+            this.ParalellismCheckBox.Size = new System.Drawing.Size(97, 19);
+            this.ParalellismCheckBox.TabIndex = 16;
+            this.ParalellismCheckBox.Text = "Single Thread";
+            this.ParalellismCheckBox.UseVisualStyleBackColor = true;
             // 
             // label8
             // 
@@ -219,38 +226,6 @@ namespace GameOfLife
             this.label6.TabIndex = 13;
             this.label6.Text = "Average calculation time: ";
             // 
-            // ThreadsNud
-            // 
-            this.ThreadsNud.Location = new System.Drawing.Point(63, 185);
-            this.ThreadsNud.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.ThreadsNud.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.ThreadsNud.Name = "ThreadsNud";
-            this.ThreadsNud.Size = new System.Drawing.Size(35, 23);
-            this.ThreadsNud.TabIndex = 12;
-            this.ThreadsNud.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.ThreadsNud.ValueChanged += new System.EventHandler(this.ThreadsNud_ValueChanged);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 185);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(51, 15);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "Threads:";
-            // 
             // pictureBox1
             // 
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -276,7 +251,6 @@ namespace GameOfLife
             ((System.ComponentModel.ISupportInitialize)(this.DensityNud)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ThreadsNud)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -296,11 +270,10 @@ namespace GameOfLife
         private System.Windows.Forms.Button ResetButton;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown ThreadsNud;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label RenderTimeLabel;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox ParalellismCheckBox;
     }
 }
 

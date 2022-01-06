@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace GameOfLife
 {
@@ -13,12 +14,12 @@ namespace GameOfLife
         public int Width {get {return Columns * CellSize; }}
         public int Height { get { return Rows * CellSize; } }
 
-        public int NumberOfThreads;
+        //public int NumberOfThreads;
 
-        public Board(int width, int height, int cellSize, double liveDensity = .1, int numberOfThreads = 1)
+        public Board(int width, int height, int cellSize, double liveDensity = .1)
         {
             CellSize = cellSize;
-            NumberOfThreads = numberOfThreads;
+            //NumberOfThreads = numberOfThreads;
             Cells = new Cell[width / cellSize, height / cellSize];
             for (int x = 0; x < Columns; x++)
             {
@@ -48,48 +49,47 @@ namespace GameOfLife
         /// <summary>
         /// Advance board to next step
         /// </summary>
-        public void Advance()
+        public void Advance(bool singleThreaded)
         {
-            // Each thread works on their own rows
-            Thread[] Threads = new Thread[NumberOfThreads];
-            for (int i = 0; i < NumberOfThreads; i++)
+            // Implementation with single thread
+            if (singleThreaded)
             {
-                DeterminingThread temp = new DeterminingThread(i);
-                Threads[i] = new Thread(new ThreadStart(temp.DetermineNextState));
-                Threads[i].Start();
+                for (int col = 0; col < Columns; col++)
+                {
+                    for (int row = 0; row < Rows; row++)
+                    {
+                        Cells[col, row].DetermineNextState();
+                    }
+                }
+
+                for (int col = 0; col < Columns; col++)
+                {
+                    for (int row = 0; row < Rows; row++)
+                    {
+                        Cells[col, row].Advance();
+                    }
+                }
+
+                return;
             }
 
-            foreach (var thread in Threads)
-            {
-                thread.Join();
-            }
+            // Implementation with parallelism
 
-            Threads = new Thread[NumberOfThreads];
-            for (int i = 0; i < NumberOfThreads; i++)
+            Parallel.For(0, Rows, row =>
             {
-                DeterminingThread temp = new DeterminingThread(i);
-                Threads[i] = new Thread(new ThreadStart(temp.Advance));
-                Threads[i].Start();
-            }
+                for (int col = 0; col < Columns; col++)
+                {
+                    Cells[col, row].DetermineNextState();
+                }
+            });
 
-            
-            foreach (var thread in Threads)
+            Parallel.For(0, Rows, row =>
             {
-                thread.Join();
-            }
-
-            /*
-            foreach (var cell in Cells)
-            {
-                cell.DetermineNextState();
-
-            }
-            */
-            /*
-            foreach (var cell in Cells)
-            {
-                cell.Advance();
-            }*/
+                for (int col = 0; col < Columns; col++)
+                {
+                    Cells[col, row].Advance();
+                }
+            });
         }
 
         /// <summary>

@@ -15,9 +15,6 @@ namespace GameOfLife
         {
             InitializeComponent();
 
-            // Change threads numberic up and down maximum depending on system/s processor count
-            ThreadsNud.Maximum = Environment.ProcessorCount - 1 == 0 ? 1 : Environment.ProcessorCount - 1;
-
             Timer = new System.Windows.Forms.Timer
             {
                 Interval = 100,
@@ -86,12 +83,10 @@ namespace GameOfLife
                 width: pictureBox1.Width,
                 height: pictureBox1.Height,
                 cellSize: (int)SizeNud.Value,
-                liveDensity: (double)DensityNud.Value / 100,
-                numberOfThreads: (int) ThreadsNud.Value
+                liveDensity: (double)DensityNud.Value / 100
             );
 
-            DeterminingThread.Cells = Board.Cells;
-            DeterminingThread.NumberOfThreads = (int)ThreadsNud.Value;
+            //DeterminingThread.Cells = Board.Cells;
             Render();
         }
 
@@ -101,7 +96,7 @@ namespace GameOfLife
         private void timer_Tick(object sender, EventArgs e)
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            Board.Advance();
+            Board.Advance(ParalellismCheckBox.Checked);
             // Calculate average calculation time
             long elapsedMs = watch.ElapsedMilliseconds;
             RenderTimesIndex = RenderTimesIndex == 9 ? 0 : RenderTimesIndex++;
@@ -114,11 +109,6 @@ namespace GameOfLife
             RenderTimeLabel.Text = ((double)sum / 10).ToString();
 
             Render();
-        }
-
-        private void ThreadsNud_ValueChanged(object sender, EventArgs e)
-        {
-            Reset();
         }
     }
 }

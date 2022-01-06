@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameOfLife
+﻿namespace GameOfLife
 {
     class DeterminingThread
     {
-        private int ThreadNumber;
+        //private int ThreadNumber;
         static public Cell[,] Cells;
         static public int NumberOfThreads;
 
-        public DeterminingThread(int threadNumber)
+        public DeterminingThread()
         {
-            ThreadNumber = threadNumber;
+            //ThreadNumber = threadNumber;
         }
 
-        public void DetermineNextState()
+        public void DetermineNextState(object data)
         {
-            for (int row = ThreadNumber; row < Cells.GetLength(0); row += NumberOfThreads)
+            for (int row = (int) data; row < Cells.GetLength(0); row += NumberOfThreads)
             {
                 for (int column = 0; column < Cells.GetLength(1); column++)
                 {
@@ -28,9 +22,9 @@ namespace GameOfLife
             }
         }
 
-        public void Advance()
+        public void Advance(object data)
         {
-            for (int row = ThreadNumber; row < Cells.GetLength(0); row += NumberOfThreads)
+            for (int row = (int) data; row < Cells.GetLength(0); row += NumberOfThreads)
             {
                 for (int column = 0; column < Cells.GetLength(1); column++)
                 {
