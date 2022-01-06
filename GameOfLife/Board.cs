@@ -50,7 +50,6 @@ namespace GameOfLife
         /// </summary>
         public void Advance()
         {
-            // DeterminingThread.Cells = Cells;
             // Each thread works on their own rows
             Thread[] Threads = new Thread[NumberOfThreads];
             for (int i = 0; i < NumberOfThreads; i++)
@@ -73,6 +72,7 @@ namespace GameOfLife
                 Threads[i].Start();
             }
 
+            
             foreach (var thread in Threads)
             {
                 thread.Join();

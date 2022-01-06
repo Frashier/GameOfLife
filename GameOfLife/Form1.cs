@@ -44,9 +44,6 @@ namespace GameOfLife
         /// </summary>
         private void Render()
         {
-            // Start measuring time
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-
             using (var bmp = new Bitmap(Board.Width, Board.Height))
             using (var gfx = Graphics.FromImage(bmp))
             using (var cellBrush = new SolidBrush(Color.LightGreen))
@@ -73,17 +70,6 @@ namespace GameOfLife
                 
                 pictureBox1.Image = (Bitmap)bmp.Clone();
             }
-
-            // Calculate average render time
-            long elapsedMs = watch.ElapsedMilliseconds;
-            RenderTimesIndex = RenderTimesIndex == 9 ? 0 : RenderTimesIndex++;
-            RenderTimes[RenderTimesIndex] = elapsedMs;
-            long sum = 0;
-            for (int i = 0; i < 10; i++)
-            {
-                sum += RenderTimes[RenderTimesIndex];
-            }
-            RenderTimeLabel.Text = ((double) sum / 10).ToString();
         }
 
         /// <summary>
@@ -114,7 +100,19 @@ namespace GameOfLife
         private void SizeNud_ValueChanged_1(object sender, EventArgs e) { Reset();  }
         private void timer_Tick(object sender, EventArgs e)
         {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
             Board.Advance();
+            // Calculate average calculation time
+            long elapsedMs = watch.ElapsedMilliseconds;
+            RenderTimesIndex = RenderTimesIndex == 9 ? 0 : RenderTimesIndex++;
+            RenderTimes[RenderTimesIndex] = elapsedMs;
+            long sum = 0;
+            for (int i = 0; i < 10; i++)
+            {
+                sum += RenderTimes[RenderTimesIndex];
+            }
+            RenderTimeLabel.Text = ((double)sum / 10).ToString();
+
             Render();
         }
 

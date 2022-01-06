@@ -193,7 +193,7 @@ namespace GameOfLife
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(152, 586);
+            this.label8.Location = new System.Drawing.Point(187, 586);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(23, 15);
             this.label8.TabIndex = 15;
@@ -203,7 +203,7 @@ namespace GameOfLife
             // 
             this.RenderTimeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.RenderTimeLabel.AutoSize = true;
-            this.RenderTimeLabel.Location = new System.Drawing.Point(132, 586);
+            this.RenderTimeLabel.Location = new System.Drawing.Point(156, 586);
             this.RenderTimeLabel.Name = "RenderTimeLabel";
             this.RenderTimeLabel.Size = new System.Drawing.Size(13, 15);
             this.RenderTimeLabel.TabIndex = 14;
@@ -215,9 +215,9 @@ namespace GameOfLife
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(6, 586);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(120, 15);
+            this.label6.Size = new System.Drawing.Size(144, 15);
             this.label6.TabIndex = 13;
-            this.label6.Text = "Average render time: ";
+            this.label6.Text = "Average calculation time: ";
             // 
             // ThreadsNud
             // 
