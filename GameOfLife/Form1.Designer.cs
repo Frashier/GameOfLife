@@ -42,6 +42,8 @@ namespace GameOfLife
             this.label4 = new System.Windows.Forms.Label();
             this.ResetButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.PartitioningNud = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.LastRenderTimeLabel = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -49,14 +51,12 @@ namespace GameOfLife
             this.RenderTimeLabel = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.PartitioningNud = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.SizeNud)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DelayNud)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DensityNud)).BeginInit();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PartitioningNud)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // GridCheckbox
@@ -195,6 +195,38 @@ namespace GameOfLife
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
             // 
+            // PartitioningNud
+            // 
+            this.PartitioningNud.Location = new System.Drawing.Point(138, 131);
+            this.PartitioningNud.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.PartitioningNud.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.PartitioningNud.Name = "PartitioningNud";
+            this.PartitioningNud.Size = new System.Drawing.Size(48, 23);
+            this.PartitioningNud.TabIndex = 23;
+            this.PartitioningNud.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.PartitioningNud.ValueChanged += new System.EventHandler(this.PartitioningNud_ValueChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 133);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(126, 15);
+            this.label5.TabIndex = 22;
+            this.label5.Text = "Data partitioning level:";
+            // 
             // label7
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -265,37 +297,6 @@ namespace GameOfLife
             this.pictureBox1.TabStop = false;
             this.pictureBox1.SizeChanged += new System.EventHandler(this.pictureBox1_SizeChanged);
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 133);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(126, 15);
-            this.label5.TabIndex = 22;
-            this.label5.Text = "Data partitioning level:";
-            // 
-            // PartitioningNud
-            // 
-            this.PartitioningNud.Location = new System.Drawing.Point(138, 131);
-            this.PartitioningNud.Maximum = new decimal(new int[] {
-            20,
-            0,
-            0,
-            0});
-            this.PartitioningNud.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.PartitioningNud.Name = "PartitioningNud";
-            this.PartitioningNud.Size = new System.Drawing.Size(48, 23);
-            this.PartitioningNud.TabIndex = 23;
-            this.PartitioningNud.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -311,8 +312,8 @@ namespace GameOfLife
             ((System.ComponentModel.ISupportInitialize)(this.DensityNud)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PartitioningNud)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

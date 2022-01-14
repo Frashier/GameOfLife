@@ -2,19 +2,19 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
-using System.Collections.Generic;
 
 namespace GameOfLife
 {
     public partial class Form1 : Form
     {
+        Watch CalculationWatch;
         System.Windows.Forms.Timer Timer;
-        Queue<long> RenderTimes;
         
         public Form1()
         {
             InitializeComponent();
-            RenderTimes = new Queue<long>();
+            CalculationWatch = new Watch(100);
+
             Timer = new System.Windows.Forms.Timer
             {
                 Interval = 100,
@@ -76,7 +76,7 @@ namespace GameOfLife
         {
             // Reset render times
             RenderTimeLabel.Text = "0";
-            RenderTimes = new Queue<long>();
+            CalculationWatch.Reset();
 
             Board = new Board(
                 width: pictureBox1.Width,
@@ -92,38 +92,21 @@ namespace GameOfLife
         private void SizeNud_ValueChanged_1(object sender, EventArgs e) { Reset();  }
         private void timer_Tick(object sender, EventArgs e)
         {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
+            // Calculate and measure
+            CalculationWatch.Start();
             Board.Advance((int) PartitioningNud.Value);
-
-            // Get elapsed ms
-            long elapsedMs = watch.ElapsedMilliseconds;
-            if (RenderTimes.Count == 100)
-            {
-                RenderTimes.Dequeue();
-            }
-            RenderTimes.Enqueue(elapsedMs);
-
-            // Calculate average time 
-            long sum = 0;
-
-            long[] buffer = new long[100];
-            RenderTimes.CopyTo(buffer, 0);
-
-            for (int i = 0; i < RenderTimes.Count; i++)
-            {
-                sum += buffer[i];
-            }
+            CalculationWatch.StopAndMeasure();
 
             // Display 
-            LastRenderTimeLabel.Text = elapsedMs.ToString();
-            RenderTimeLabel.Text = (Math.Round((double)sum / RenderTimes.Count, 1)).ToString();
+            LastRenderTimeLabel.Text = CalculationWatch.LastMeasurement.ToString();
+            RenderTimeLabel.Text = CalculationWatch.Average.ToString();
 
             Render();
         }
 
-        private void ParalellismCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void PartitioningNud_ValueChanged(object sender, EventArgs e)
         {
-            RenderTimes = new Queue<long>();
+            CalculationWatch.Reset();
         }
     }
 }
