@@ -26,7 +26,7 @@ namespace GameOfLife
             }
 
             // If is not alive, then will become alive if it has 3 alive neighbours
-            WillBeAlive = LiveNeighbours == 3;
+            WillBeAlive =  LiveNeighbours == 3;
         }
         /// <summary>
         /// Change cell's state to the next one

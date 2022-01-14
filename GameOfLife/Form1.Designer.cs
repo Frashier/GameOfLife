@@ -42,16 +42,21 @@ namespace GameOfLife
             this.label4 = new System.Windows.Forms.Label();
             this.ResetButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.ParalellismCheckBox = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.LastRenderTimeLabel = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.RenderTimeLabel = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.PartitioningNud = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.SizeNud)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DelayNud)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DensityNud)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PartitioningNud)).BeginInit();
             this.SuspendLayout();
             // 
             // GridCheckbox
@@ -77,7 +82,7 @@ namespace GameOfLife
             // 
             // SizeNud
             // 
-            this.SizeNud.Location = new System.Drawing.Point(104, 33);
+            this.SizeNud.Location = new System.Drawing.Point(138, 33);
             this.SizeNud.Name = "SizeNud";
             this.SizeNud.Size = new System.Drawing.Size(48, 23);
             this.SizeNud.TabIndex = 3;
@@ -108,7 +113,7 @@ namespace GameOfLife
             // 
             // DelayNud
             // 
-            this.DelayNud.Location = new System.Drawing.Point(84, 62);
+            this.DelayNud.Location = new System.Drawing.Point(138, 62);
             this.DelayNud.Maximum = new decimal(new int[] {
             5000,
             0,
@@ -135,7 +140,7 @@ namespace GameOfLife
             // 
             // DensityNud
             // 
-            this.DensityNud.Location = new System.Drawing.Point(84, 91);
+            this.DensityNud.Location = new System.Drawing.Point(138, 91);
             this.DensityNud.Name = "DensityNud";
             this.DensityNud.Size = new System.Drawing.Size(48, 23);
             this.DensityNud.TabIndex = 7;
@@ -156,7 +161,7 @@ namespace GameOfLife
             // 
             // ResetButton
             // 
-            this.ResetButton.Location = new System.Drawing.Point(9, 136);
+            this.ResetButton.Location = new System.Drawing.Point(9, 160);
             this.ResetButton.Name = "ResetButton";
             this.ResetButton.Size = new System.Drawing.Size(75, 23);
             this.ResetButton.TabIndex = 10;
@@ -166,7 +171,11 @@ namespace GameOfLife
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.ParalellismCheckBox);
+            this.groupBox2.Controls.Add(this.PartitioningNud);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Controls.Add(this.LastRenderTimeLabel);
+            this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.RenderTimeLabel);
             this.groupBox2.Controls.Add(this.label6);
@@ -186,15 +195,35 @@ namespace GameOfLife
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
             // 
-            // ParalellismCheckBox
+            // label7
             // 
-            this.ParalellismCheckBox.AutoSize = true;
-            this.ParalellismCheckBox.Location = new System.Drawing.Point(7, 166);
-            this.ParalellismCheckBox.Name = "ParalellismCheckBox";
-            this.ParalellismCheckBox.Size = new System.Drawing.Size(97, 19);
-            this.ParalellismCheckBox.TabIndex = 16;
-            this.ParalellismCheckBox.Text = "Single Thread";
-            this.ParalellismCheckBox.UseVisualStyleBackColor = true;
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(187, 560);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(23, 15);
+            this.label7.TabIndex = 21;
+            this.label7.Text = "ms";
+            // 
+            // LastRenderTimeLabel
+            // 
+            this.LastRenderTimeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.LastRenderTimeLabel.AutoSize = true;
+            this.LastRenderTimeLabel.Location = new System.Drawing.Point(156, 560);
+            this.LastRenderTimeLabel.Name = "LastRenderTimeLabel";
+            this.LastRenderTimeLabel.Size = new System.Drawing.Size(13, 15);
+            this.LastRenderTimeLabel.TabIndex = 20;
+            this.LastRenderTimeLabel.Text = "0";
+            // 
+            // label10
+            // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 560);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(119, 15);
+            this.label10.TabIndex = 19;
+            this.label10.Text = "Last calculation time:";
             // 
             // label8
             // 
@@ -236,6 +265,37 @@ namespace GameOfLife
             this.pictureBox1.TabStop = false;
             this.pictureBox1.SizeChanged += new System.EventHandler(this.pictureBox1_SizeChanged);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 133);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(126, 15);
+            this.label5.TabIndex = 22;
+            this.label5.Text = "Data partitioning level:";
+            // 
+            // PartitioningNud
+            // 
+            this.PartitioningNud.Location = new System.Drawing.Point(138, 131);
+            this.PartitioningNud.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.PartitioningNud.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.PartitioningNud.Name = "PartitioningNud";
+            this.PartitioningNud.Size = new System.Drawing.Size(48, 23);
+            this.PartitioningNud.TabIndex = 23;
+            this.PartitioningNud.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -252,6 +312,7 @@ namespace GameOfLife
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PartitioningNud)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -273,7 +334,11 @@ namespace GameOfLife
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label RenderTimeLabel;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.CheckBox ParalellismCheckBox;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label LastRenderTimeLabel;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.NumericUpDown PartitioningNud;
+        private System.Windows.Forms.Label label5;
     }
 }
 

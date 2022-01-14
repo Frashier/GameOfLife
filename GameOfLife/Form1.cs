@@ -2,19 +2,19 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace GameOfLife
 {
     public partial class Form1 : Form
     {
         System.Windows.Forms.Timer Timer;
-        long[] RenderTimes;
-        int RenderTimesIndex;
-
+        Queue<long> RenderTimes;
+        
         public Form1()
         {
             InitializeComponent();
-
+            RenderTimes = new Queue<long>();
             Timer = new System.Windows.Forms.Timer
             {
                 Interval = 100,
@@ -76,8 +76,7 @@ namespace GameOfLife
         {
             // Reset render times
             RenderTimeLabel.Text = "0";
-            RenderTimes = new long[10];
-            RenderTimesIndex = 0;
+            RenderTimes = new Queue<long>();
 
             Board = new Board(
                 width: pictureBox1.Width,
@@ -85,8 +84,6 @@ namespace GameOfLife
                 cellSize: (int)SizeNud.Value,
                 liveDensity: (double)DensityNud.Value / 100
             );
-
-            //DeterminingThread.Cells = Board.Cells;
             Render();
         }
 
@@ -96,19 +93,37 @@ namespace GameOfLife
         private void timer_Tick(object sender, EventArgs e)
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            Board.Advance(ParalellismCheckBox.Checked);
-            // Calculate average calculation time
+            Board.Advance((int) PartitioningNud.Value);
+
+            // Get elapsed ms
             long elapsedMs = watch.ElapsedMilliseconds;
-            RenderTimesIndex = RenderTimesIndex == 9 ? 0 : RenderTimesIndex++;
-            RenderTimes[RenderTimesIndex] = elapsedMs;
-            long sum = 0;
-            for (int i = 0; i < 10; i++)
+            if (RenderTimes.Count == 100)
             {
-                sum += RenderTimes[RenderTimesIndex];
+                RenderTimes.Dequeue();
             }
-            RenderTimeLabel.Text = ((double)sum / 10).ToString();
+            RenderTimes.Enqueue(elapsedMs);
+
+            // Calculate average time 
+            long sum = 0;
+
+            long[] buffer = new long[100];
+            RenderTimes.CopyTo(buffer, 0);
+
+            for (int i = 0; i < RenderTimes.Count; i++)
+            {
+                sum += buffer[i];
+            }
+
+            // Display 
+            LastRenderTimeLabel.Text = elapsedMs.ToString();
+            RenderTimeLabel.Text = (Math.Round((double)sum / RenderTimes.Count, 1)).ToString();
 
             Render();
+        }
+
+        private void ParalellismCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            RenderTimes = new Queue<long>();
         }
     }
 }

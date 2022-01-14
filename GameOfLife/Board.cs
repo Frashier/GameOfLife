@@ -6,7 +6,7 @@ namespace GameOfLife
 {
     class Board
     {
-        public readonly Cell[,] Cells;
+        public Cell[,] Cells;
         public readonly int CellSize;
 
         public int Columns {get {return Cells.GetLength(0); }}
@@ -19,7 +19,6 @@ namespace GameOfLife
         public Board(int width, int height, int cellSize, double liveDensity = .1)
         {
             CellSize = cellSize;
-            //NumberOfThreads = numberOfThreads;
             Cells = new Cell[width / cellSize, height / cellSize];
             for (int x = 0; x < Columns; x++)
             {
@@ -28,7 +27,7 @@ namespace GameOfLife
                     Cells[x, y] = new Cell();
                 }
             }
-                
+
             ConnectNeighbours();
             RandomizePopulation(liveDensity);
         }
@@ -49,45 +48,27 @@ namespace GameOfLife
         /// <summary>
         /// Advance board to next step
         /// </summary>
-        public void Advance(bool singleThreaded)
+        public void Advance(int partitioningLevel = 8)
         {
-            // Implementation with single thread
-            if (singleThreaded)
+            Parallel.For(0, partitioningLevel, partitionNumber =>
             {
-                for (int col = 0; col < Columns; col++)
+                for (int row = partitionNumber; row < Rows; row += partitioningLevel)
                 {
-                    for (int row = 0; row < Rows; row++)
+                    for (int col = 0; col < Columns; col++)
                     {
                         Cells[col, row].DetermineNextState();
                     }
                 }
+            });
 
-                for (int col = 0; col < Columns; col++)
+            Parallel.For(0, partitioningLevel, partitionNumber =>
+            {
+                for (int row = partitionNumber; row < Rows; row += partitioningLevel)
                 {
-                    for (int row = 0; row < Rows; row++)
+                    for (int col = 0; col < Columns; col++)
                     {
                         Cells[col, row].Advance();
                     }
-                }
-
-                return;
-            }
-
-            // Implementation with parallelism
-
-            Parallel.For(0, Rows, row =>
-            {
-                for (int col = 0; col < Columns; col++)
-                {
-                    Cells[col, row].DetermineNextState();
-                }
-            });
-
-            Parallel.For(0, Rows, row =>
-            {
-                for (int col = 0; col < Columns; col++)
-                {
-                    Cells[col, row].Advance();
                 }
             });
         }
