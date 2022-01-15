@@ -13,8 +13,6 @@ namespace GameOfLife
         public int Width {get {return Columns * CellSize; }}
         public int Height { get { return Rows * CellSize; } }
 
-        //public int NumberOfThreads;
-
         public Board(int width, int height, int cellSize, double liveDensity = .1)
         {
             CellSize = cellSize;
